@@ -77,11 +77,11 @@ public class AuthenticationService {
                     )
             );
         } catch (BadCredentialsException e) {
-            throw new RuntimeException("Credenciales inválidas");
+            throw new RuntimeException("Inválid credentials");
         }
 
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getEmail());
         String jwtToken = jwtService.generateToken(userDetails);
