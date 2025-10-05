@@ -1,5 +1,4 @@
-package org.ghosty.domain;
-
+package org.ghosty.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

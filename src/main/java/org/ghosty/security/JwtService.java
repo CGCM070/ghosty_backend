@@ -1,4 +1,4 @@
-package org.ghosty.config.jwt;
+package org.ghosty.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

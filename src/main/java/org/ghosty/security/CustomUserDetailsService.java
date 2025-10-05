@@ -1,7 +1,7 @@
-package org.ghosty.config;
+package org.ghosty.security;
 
 import lombok.RequiredArgsConstructor;
-import org.ghosty.domain.User;
+import org.ghosty.model.User;
 import org.ghosty.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

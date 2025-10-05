@@ -1,4 +1,4 @@
-package org.ghosty.config.jwt;
+package org.ghosty.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

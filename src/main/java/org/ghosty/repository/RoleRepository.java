@@ -1,6 +1,6 @@
 package org.ghosty.repository;
 
-import org.ghosty.domain.Rol;
+import org.ghosty.model.Rol;
 import org.ghosty.enums.Erol;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

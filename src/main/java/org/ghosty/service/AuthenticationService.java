@@ -1,10 +1,10 @@
 package org.ghosty.service;
 
 import lombok.RequiredArgsConstructor;
-import org.ghosty.config.CustomUserDetailsService;
-import org.ghosty.config.jwt.JwtService;
-import org.ghosty.domain.Rol;
-import org.ghosty.domain.User;
+import org.ghosty.security.CustomUserDetailsService;
+import org.ghosty.security.JwtService;
+import org.ghosty.model.Rol;
+import org.ghosty.model.User;
 import org.ghosty.dto.AuthResponseDTO;
 import org.ghosty.dto.LoginRequestDTO;
 import org.ghosty.dto.RegisterRequestDTO;

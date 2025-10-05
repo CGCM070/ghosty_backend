@@ -1,6 +1,6 @@
 package org.ghosty.repository;
 
-import org.ghosty.domain.User;
+import org.ghosty.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
