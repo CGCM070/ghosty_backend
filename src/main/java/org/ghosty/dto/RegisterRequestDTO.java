@@ -1,8 +1,11 @@
 package org.ghosty.dto;
 
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
 @Builder
-public record RegisterRequestDTO(String username, String email, String password) {
+public record RegisterRequestDTO(@NotBlank String username,
+                                 @NotBlank String email,
+                                 @NotBlank String password) {
 }
