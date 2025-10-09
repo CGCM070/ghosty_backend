@@ -2,6 +2,7 @@ package org.ghosty.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.ghosty.dto.request.CreateUserRequestDTO;
 import org.ghosty.dto.request.UpdateUserRequestDTO;
 import org.ghosty.dto.response.UserResponseDTO;
 import org.ghosty.service.UserService;
@@ -31,6 +32,16 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser (@PathVariable  Long id, @Valid @RequestBody UpdateUserRequestDTO updateUserRequestDTO) {
         return ResponseEntity.ok(userService.updateUser(id,updateUserRequestDTO));
+    }
+
+    @PostMapping("")
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody CreateUserRequestDTO createUserRequestDTO) {
+        return ResponseEntity.ok(userService. createUser(createUserRequestDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
     }
 
 
