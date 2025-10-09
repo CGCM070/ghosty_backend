@@ -2,6 +2,8 @@ package org.ghosty.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.Date;
@@ -18,14 +20,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
+
+    @NotBlank
     private String username;
+
+    @NotBlank @Email
     private String email;
 
     @JsonIgnore
     @ToString.Exclude
+    @NotBlank
     private String password;
-
-    private Date connectedAt;
 
     @ManyToOne ()
     @JoinColumn (name = "rol_id", nullable = false)

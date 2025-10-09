@@ -17,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +52,6 @@ public class AuthenticationService {
                 .username(registerRequestDTO.username())
                 .email(registerRequestDTO.email())
                 .password(passwordEncoder.encode(registerRequestDTO.password()))
-                .connectedAt(new Date())
                 .rol(defaultRol)
                 .build();
 
@@ -96,4 +96,8 @@ public class AuthenticationService {
         );
     }
 
+    public static void main(String[] args) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        System.out.println(passwordEncoder.encode("password"));
+    }
 }

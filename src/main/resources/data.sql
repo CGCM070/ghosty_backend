@@ -1,0 +1,36 @@
+INSERT INTO roles (id, rol) VALUES
+  (1, 'ROLE_ADMIN'),
+  (2, 'ROLE_USER');
+
+INSERT INTO user (id, email, password, username, rol_id) VALUES
+  (1, 'admin1@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'admin1', 1),
+  (2, 'admin2@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'admin2', 1),
+  (3, 'admin3@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'admin3', 1),
+  (4, 'admin4@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'admin4', 1),
+  (5, 'admin5@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'admin5', 1),
+  (6, 'user1@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user1', 2),
+  (7, 'user2@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user2', 2),
+  (8, 'user3@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user3', 2),
+  (9, 'user4@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user4', 2),
+  (10, 'user5@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user5', 2),
+  (11, 'user6@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user6', 2),
+  (12, 'user7@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user7', 2),
+  (13, 'user8@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user8', 2),
+  (14, 'user9@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user9', 2),
+  (15, 'user10@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user10', 2),
+  (16, 'user11@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user11', 2),
+  (17, 'user12@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user12', 2),
+  (18, 'user13@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user13', 2),
+  (19, 'user14@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user14', 2),
+  (20, 'user15@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user15', 2),
+  (21, 'user16@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user16', 2),
+  (22, 'user17@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user17', 2),
+  (23, 'user18@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user18', 2),
+  (24, 'user19@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user19', 2),
+  (25, 'user20@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user20', 2),
+  (26, 'user21@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user21', 2),
+  (27, 'user22@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user22', 2),
+  (28, 'user23@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user23', 2),
+  (29, 'user24@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user24', 2),
+  (30, 'user25@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user25', 2);
+
