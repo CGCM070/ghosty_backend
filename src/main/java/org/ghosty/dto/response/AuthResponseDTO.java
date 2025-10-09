@@ -1,4 +1,4 @@
-package org.ghosty.dto;
+package org.ghosty.dto.response;
 
 import lombok.Builder;
 

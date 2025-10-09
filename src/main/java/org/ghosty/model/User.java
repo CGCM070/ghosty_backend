@@ -1,5 +1,6 @@
 package org.ghosty.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +20,11 @@ public class User {
     private Long id;
     private String username;
     private String email;
+
+    @JsonIgnore
+    @ToString.Exclude
     private String password;
+
     private Date connectedAt;
 
     @ManyToOne ()

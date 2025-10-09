@@ -1,13 +1,15 @@
 package org.ghosty.service;
 
 import lombok.RequiredArgsConstructor;
+import org.ghosty.exception.ConflictException;
+import org.ghosty.exception.ResourceNotFoundException;
 import org.ghosty.security.CustomUserDetailsService;
 import org.ghosty.security.JwtService;
 import org.ghosty.model.Rol;
 import org.ghosty.model.User;
-import org.ghosty.dto.AuthResponseDTO;
-import org.ghosty.dto.LoginRequestDTO;
-import org.ghosty.dto.RegisterRequestDTO;
+import org.ghosty.dto.response.AuthResponseDTO;
+import org.ghosty.dto.request.LoginRequestDTO;
+import org.ghosty.dto.request.RegisterRequestDTO;
 import org.ghosty.enums.Erol;
 import org.ghosty.repository.RoleRepository;
 import org.ghosty.repository.UserRepository;
@@ -39,11 +41,11 @@ public class AuthenticationService {
     public AuthResponseDTO register(RegisterRequestDTO registerRequestDTO) {
 
         if (userRepository.findByEmail(registerRequestDTO.email()).isPresent()) {
-            throw  new RuntimeException("Email already exists");
+            throw  new ConflictException("El email ya está registrado");
         }
 
         Rol defaultRol = rolRepository.findByRol(Erol.ROLE_USER)
-                .orElseThrow(() -> new RuntimeException("Default role not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Rol por defecto no encontrado"));
 
         User newUser = User.builder()
                 .username(registerRequestDTO.username())
@@ -77,11 +79,11 @@ public class AuthenticationService {
                     )
             );
         } catch (BadCredentialsException e) {
-            throw new RuntimeException("Inválid credentials");
+            throw new BadCredentialsException("Credenciales inválidas");
         }
 
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getEmail());
         String jwtToken = jwtService.generateToken(userDetails);

@@ -2,9 +2,9 @@ package org.ghosty.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.ghosty.dto.AuthResponseDTO;
-import org.ghosty.dto.LoginRequestDTO;
-import org.ghosty.dto.RegisterRequestDTO;
+import org.ghosty.dto.response.AuthResponseDTO;
+import org.ghosty.dto.request.LoginRequestDTO;
+import org.ghosty.dto.request.RegisterRequestDTO;
 import org.ghosty.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
