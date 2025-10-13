@@ -33,4 +33,3 @@ INSERT INTO user (id, email, password, username, rol_id) VALUES
   (28, 'user23@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user23', 2),
   (29, 'user24@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user24', 2),
   (30, 'user25@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'user25', 2);
-
