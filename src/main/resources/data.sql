@@ -2,7 +2,7 @@ INSERT INTO roles (id, rol) VALUES
   (1, 'ROLE_ADMIN'),
   (2, 'ROLE_USER');
 
-INSERT INTO user (id, email, password, username, rol_id) VALUES
+INSERT INTO users (id, email, password, username, rol_id) VALUES
   (1, 'admin1@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'admin1', 1),
   (2, 'admin2@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'admin2', 1),
   (3, 'admin3@example.com', '$2a$10$06hYq/zTZnn59LnRA5IXPeGWdR79kVeB8RX8qMI8ZTugL//IIGdZu', 'admin3', 1),
