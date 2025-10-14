@@ -1,5 +1,6 @@
 package org.ghosty.service;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import lombok.RequiredArgsConstructor;
 import org.ghosty.exception.ConflictException;
 import org.ghosty.exception.ResourceNotFoundException;
@@ -10,6 +11,7 @@ import org.ghosty.model.User;
 import org.ghosty.dto.response.AuthResponseDTO;
 import org.ghosty.dto.request.LoginRequestDTO;
 import org.ghosty.dto.request.RegisterRequestDTO;
+import org.ghosty.dto.request.GoogleLoginRequestDTO;
 import org.ghosty.enums.Erol;
 import org.ghosty.repository.RoleRepository;
 import org.ghosty.repository.UserRepository;
@@ -23,6 +25,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +39,7 @@ public class AuthenticationService {
     private final RoleRepository rolRepository;
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final GoogleAuthService googleAuthService;
 
 
 
@@ -96,8 +101,55 @@ public class AuthenticationService {
         );
     }
 
-    public static void main(String[] args) {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        System.out.println(passwordEncoder.encode("password"));
+    @Transactional
+    public AuthResponseDTO authenticateWithGoogle(GoogleLoginRequestDTO request) {
+        // Verify Google token
+        GoogleIdToken.Payload payload = googleAuthService.verifyGoogleToken(request.token());
+        
+        String email = payload.getEmail();
+        String name = (String) payload.get("name");
+        String googleId = payload.getSubject();
+        
+        // Check if user already exists
+        Optional<User> existingUser = userRepository.findByEmail(email);
+        
+        User user;
+        if (existingUser.isPresent()) {
+            // User exists, update Google ID if not set
+            user = existingUser.get();
+            if (user.getGoogleId() == null) {
+                user.setGoogleId(googleId);
+                user = userRepository.save(user);
+            }
+        } else {
+            // Create new user with Google account
+            Rol defaultRol = rolRepository.findByRol(Erol.ROLE_ADMIN)
+                    .orElseThrow(() -> new ResourceNotFoundException("Rol por defecto no encontrado"));
+            
+            // For Google users, we generate a random password that they won't use
+            String randomPassword = UUID.randomUUID().toString();
+            
+            user = User.builder()
+                    .username(name != null ? name : email.split("@")[0])
+                    .email(email)
+                    .password(passwordEncoder.encode(randomPassword))
+                    .googleId(googleId)
+                    .rol(defaultRol)
+                    .build();
+            
+            user = userRepository.save(user);
+        }
+        
+        // Generate JWT token
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getEmail());
+        String jwtToken = jwtService.generateToken(userDetails);
+        
+        return new AuthResponseDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                jwtToken
+        );
     }
+
 }

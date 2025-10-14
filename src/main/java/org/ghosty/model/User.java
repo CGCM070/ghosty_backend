@@ -29,12 +29,15 @@ public class User {
 
     @JsonIgnore
     @ToString.Exclude
-    @NotBlank
     private String password;
 
     @ManyToOne ()
     @JoinColumn (name = "rol_id", nullable = false)
     private Rol rol;
+
+    // Campo para identificar si el usuario se registró con Google
+    @Column(name = "google_id")
+    private String googleId;
 
 
 }
