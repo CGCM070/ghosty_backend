@@ -14,6 +14,7 @@ import java.util.Date;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+
 @Table(name = "users")
 public class User {
 
