@@ -32,25 +32,37 @@ COPY src src
 RUN ./mvnw -Pnative native:compile -DskipTests
 
 # ==========================================
-# Etapa 2: Runtime - Minimal Alpine Linux
+# Etapa 2: Runtime - Ubuntu minimal con librerías necesarias
 # ==========================================
-FROM cgr.dev/chainguard/glibc-dynamic:latest
+FROM ubuntu:22.04
 
 WORKDIR /app
 
-# Create user for security
-USER nonroot:nonroot
+# Instalar solo las librerías necesarias para el ejecutable nativo
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    ca-certificates \
+    libz1 \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy the native executable from the build stage
-COPY --from=build --chown=nonroot:nonroot /build/target/ghosty /app/ghosty
+# Crear usuario no-root para seguridad
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 
-# Expose port
+# Copiar el ejecutable nativo desde la etapa de build
+COPY --from=build /build/target/ghosty /app/ghosty
+
+# Dar permisos de ejecución
+RUN chmod +x /app/ghosty && \
+    chown -R appuser:appgroup /app
+
+# Cambiar a usuario no-root
+USER appuser
+
+# Exponer puerto
 EXPOSE 8080
 
-# Environment variable for Spring profile
+# Variable de entorno para perfil de Spring
 ENV SPRING_PROFILES_ACTIVE=prod
 
-
-
-# Run the native executable
+# Ejecutar el binario nativo
 ENTRYPOINT ["/app/ghosty"]
