@@ -1,42 +1,49 @@
 package org.ghosty.service;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.gson.GsonFactory;
-import lombok.RequiredArgsConstructor;
 import org.ghosty.exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.Collections;
+import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class GoogleAuthService {
 
-    @Value("${google.client.id}")
-    private String googleClientId;
+    @Value("${spring.security.oauth2.client.provider.google.user-info-uri:https://www.googleapis.com/oauth2/v3/userinfo}")
+    private String googleUserInfoUri;
+
+    private final RestTemplate restTemplate;
+
+    public GoogleAuthService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     /**
-     * Verify Google token and extract user information
+     * Verify Google token and extract user information using Spring OAuth2
      */
-    public GoogleIdToken.Payload verifyGoogleToken(String idTokenString) {
+    public Map<String, Object> verifyGoogleToken(String accessToken) {
         try {
-            GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
-                    new NetHttpTransport(),
-                    new GsonFactory()
-            )
-                    .setAudience(Collections.singletonList(googleClientId))
-                    .build();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setBearerAuth(accessToken);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
 
-            GoogleIdToken idToken = verifier.verify(idTokenString);
-            
-            if (idToken != null) {
-                return idToken.getPayload();
+            ResponseEntity<Map> response = restTemplate.exchange(
+                    googleUserInfoUri,
+                    HttpMethod.GET,
+                    entity,
+                    Map.class
+            );
+
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                return response.getBody();
             } else {
                 throw new BadRequestException("Token de Google inválido");
             }
+        } catch (HttpClientErrorException e) {
+            throw new BadRequestException("Error al verificar el token de Google: " + e.getMessage());
         } catch (Exception e) {
             throw new BadRequestException("Error al verificar el token de Google: " + e.getMessage());
         }

@@ -1,6 +1,5 @@
 package org.ghosty.security;
 
-import lombok.RequiredArgsConstructor;
 import org.ghosty.model.User;
 import org.ghosty.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,10 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
+
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

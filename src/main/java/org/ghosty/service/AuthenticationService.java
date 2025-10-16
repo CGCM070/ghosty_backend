@@ -1,7 +1,5 @@
 package org.ghosty.service;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import lombok.RequiredArgsConstructor;
 import org.ghosty.exception.ConflictException;
 import org.ghosty.exception.ResourceNotFoundException;
 import org.ghosty.security.CustomUserDetailsService;
@@ -19,17 +17,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 
 public class AuthenticationService {
 
@@ -40,6 +36,16 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final GoogleAuthService googleAuthService;
+
+    public AuthenticationService(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService, RoleRepository rolRepository, UserRepository userRepository, JwtService jwtService, GoogleAuthService googleAuthService) {
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
+        this.customUserDetailsService = customUserDetailsService;
+        this.rolRepository = rolRepository;
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.googleAuthService = googleAuthService;
+    }
 
 
 
@@ -103,12 +109,12 @@ public class AuthenticationService {
 
     @Transactional
     public AuthResponseDTO authenticateWithGoogle(GoogleLoginRequestDTO request) {
-        // Verify Google token
-        GoogleIdToken.Payload payload = googleAuthService.verifyGoogleToken(request.token());
+        // Verify Google token using Spring OAuth2
+        Map<String, Object> userInfo = googleAuthService.verifyGoogleToken(request.token());
         
-        String email = payload.getEmail();
-        String name = (String) payload.get("name");
-        String googleId = payload.getSubject();
+        String email = (String) userInfo.get("email");
+        String name = (String) userInfo.get("name");
+        String googleId = (String) userInfo.get("sub");
         
         // Check if user already exists
         Optional<User> existingUser = userRepository.findByEmail(email);

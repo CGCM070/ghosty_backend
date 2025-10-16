@@ -1,0 +1,15 @@
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": "application.*\\.properties"
+      },
+      {
+        "pattern": "application.*\\.yml"
+      },
+      {
+        "pattern": "application.*\\.yaml"
+      }
+    ]
+  }
+}

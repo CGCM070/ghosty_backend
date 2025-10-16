@@ -1,7 +1,6 @@
 package org.ghosty.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.ghosty.dto.response.AuthResponseDTO;
 import org.ghosty.dto.request.LoginRequestDTO;
 import org.ghosty.dto.request.RegisterRequestDTO;
@@ -12,10 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/api/auth")
-@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthenticationService authService;
+
+    public AuthController(AuthenticationService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDTO> register( @Valid  @RequestBody RegisterRequestDTO request) {

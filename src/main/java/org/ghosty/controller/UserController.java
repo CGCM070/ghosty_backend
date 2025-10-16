@@ -1,7 +1,6 @@
 package org.ghosty.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.ghosty.dto.request.CreateUserRequestDTO;
 import org.ghosty.dto.request.UpdateUserRequestDTO;
 import org.ghosty.dto.response.UserResponseDTO;
@@ -13,10 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/api/users")
-@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("")
     public ResponseEntity<Page<UserResponseDTO>> getUsers(Pageable pageable) {

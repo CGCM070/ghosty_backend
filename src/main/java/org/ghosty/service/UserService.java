@@ -2,7 +2,6 @@ package org.ghosty.service;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.ghosty.dto.request.CreateUserRequestDTO;
 import org.ghosty.dto.request.UpdateUserRequestDTO;
 import org.ghosty.dto.response.UserResponseDTO;
@@ -20,12 +19,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public Page<UserResponseDTO> findAllDTO(Pageable pageable) {
         return userRepository.findAll(pageable)
